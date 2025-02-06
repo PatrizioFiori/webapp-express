@@ -1,13 +1,24 @@
 const connect = require("../data/db")
 
 const index = (req, res) => {
+    const sql = "SELECT * FROM movies";
 
-    const sql = "SELECT * FROM movies"
     connect.query(sql, (err, results) => {
-        if (err) return res.status(500).json({ error: "Query al db fallita" })
-        res.json(results)
-    })
-}
+        if (err) {
+            return res.status(500).json({ error: "Query al db fallita" });
+        }
+
+        const movies = results.map(movie => {
+            return {
+                ...movie,
+                image: req.imagePath //da completare
+            };
+        });
+
+        res.json(movies);
+    });
+};
+
 
 const show = (req, res) => {
     const id = req.params.id
@@ -23,22 +34,22 @@ const show = (req, res) => {
 }
 
 const store = (req, res) => {
-    res.send("store")
+    res.send("rotta store")
 }
 
 const update = (req, res) => {
     const id = req.params.id
-    res.send(`update ${id}`)
+    res.send(`rotta update ${id}`)
 }
 
 const modify = (req, res) => {
     const id = req.params.id
-    res.send(`modify ${id}`)
+    res.send(`rotta modify ${id}`)
 }
 
 const destroy = (req, res) => {
     const id = req.params.id
-    res.send(`destroy ${id}`)
+    res.send(`rotta destroy ${id}`)
 }
 
 module.exports = {

@@ -5,6 +5,7 @@ const port = process.env.PORT || 3000
 //import middleware
 const notFound = require("./middlewares/notFound")
 const errorHandler = require("./middlewares/errorHandler")
+const imagePath = require("./middlewares/imgPathHandler")
 
 const moviesRouter = require("./routers/movies")
 
@@ -13,6 +14,8 @@ app.use(express.static("public"))
 
 //parsing body
 app.use(express.json())
+
+app.use(imagePath)
 
 //endpoint
 app.get("/", (req, res) => {
