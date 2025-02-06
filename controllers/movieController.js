@@ -11,7 +11,7 @@ const index = (req, res) => {
         const movies = results.map(movie => {
             return {
                 ...movie,
-                image: req.imagePath //da completare
+                image: req.imagePath + movie.image
             };
         });
 
