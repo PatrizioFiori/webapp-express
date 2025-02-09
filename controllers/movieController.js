@@ -21,17 +21,30 @@ const index = (req, res) => {
 
 //aggiungere l'arrotondamento dei voti e l'array di recensioni
 const show = (req, res) => {
-    const id = req.params.id
-    const sql = "SELECT * FROM movies WHERE id = ?"
-    connect.query(sql, [id], (err, results) => {
-        if (err)
-            return res.status(500).json({ error: "DB query failed" })
-        if (results.length === 0)
-            return res.status(404).json({ err: "post not found" })
-        const post = results[0]
-        res.json(post)
-    })
-}
+    const id = req.params.id;
+
+    const movieSql = "SELECT * FROM movies WHERE id = ?";
+    const reviewsSql = "SELECT * FROM reviews WHERE movie_id = ?";
+
+    connect.query(movieSql, [id], (err, movieResults) => {
+        if (err) {
+            return res.status(500).json({ error: "DB query failed" });
+        }
+        if (movieResults.length === 0) {
+            return res.status(404).json({ error: "Movie not found" });
+        }
+        const movie = movieResults[0];
+
+        connect.query(reviewsSql, [id], (err, reviewResults) => {
+            if (err) {
+                return res.status(500).json({ error: "Failed to fetch reviews" });
+            }
+            movie.reviews = reviewResults;
+            res.json(movie);
+        });
+    });
+};
+
 
 const store = (req, res) => {
     res.send("rotta store")
