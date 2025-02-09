@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
 const port = process.env.PORT || 3000
-import cors from cors
+import cors from "cors"
 
 //import middleware
 const notFound = require("./middlewares/notFound")
@@ -10,7 +10,7 @@ const imagePath = require("./middlewares/imgPathHandler")
 
 const moviesRouter = require("./routers/movies")
 
-app.use(corse({
+app.use(cors({
     origin: `http://localhost5173`
 }))
 
