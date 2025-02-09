@@ -19,7 +19,7 @@ const index = (req, res) => {
     });
 };
 
-
+//aggiungere l'arrotondamento dei voti e l'array di recensioni
 const show = (req, res) => {
     const id = req.params.id
     const sql = "SELECT * FROM movies WHERE id = ?"
