@@ -49,7 +49,17 @@ const show = (req, res) => {
 
 const store = (req, res) => {
     const id = req.params.id
-    //predisporre la rotta per inserire recensioni
+    const { text, name, vote } = req.body //richiamo i dati dal body
+
+    const recensioneSql = "INSERT INTO reviews (text, name, vote, movie_id) VALUES (?,?,?,?)"
+
+    connect.query(recensioneSql, [text, name, vote, id], (err, results) => {
+        if (err) return res.status(500).json({ error: "DB query failed" });
+
+        res.status(201);
+        res.json({ message: "recensione inserita", id: results.insertId })
+
+    })
 }
 
 const update = (req, res) => {

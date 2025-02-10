@@ -15,3 +15,12 @@
 - Inserire delle immagini nel progetto express e dunque nel db
 - Inserire i dati di connessione al database come variabili d’ambiente
 - Inserire un middleware per la gestione del percorso assoluto delle immagini
+  
+
+
+# webapp-express-aggiunta-form
+Aggiungere l’API che gestisce l’aggiunta di una nuova recensione e, sul front end nella pagina di dettaglio, il form che invia in post la nuova recensione.
+
+### BONUS
+validazione del form prima dell’invio con eventuale messaggio di errore
+Buon lavoro!
