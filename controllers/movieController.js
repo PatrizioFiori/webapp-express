@@ -47,7 +47,8 @@ const show = (req, res) => {
 
 
 const store = (req, res) => {
-    res.send("rotta store")
+    const id = req.params.id
+    //predisporre la rotta per inserire recensioni
 }
 
 const update = (req, res) => {
