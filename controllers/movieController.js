@@ -34,6 +34,7 @@ const show = (req, res) => {
             return res.status(404).json({ error: "Movie not found" });
         }
         const movie = movieResults[0];
+        movie.image = req.imagePath + movie.image
 
         connect.query(reviewsSql, [id], (err, reviewResults) => {
             if (err) {
