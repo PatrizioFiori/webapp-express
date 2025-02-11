@@ -24,3 +24,12 @@ Aggiungere l’API che gestisce l’aggiunta di una nuova recensione e, sul fron
 ### BONUS
 validazione del form prima dell’invio con eventuale messaggio di errore
 Buon lavoro!
+
+# webapp-express aggiunta form per invio dei nuovi film 
+
+
+Lato beckend:
+- installare multer npm i multer
+- aggiungere il middlevare
+- nel router importarlo ‘iniettare’ il middleware nella rotta store ex router.post('/', upload.single('image'), bookController.store)
+- nel controller gestire i dati in ingresso delle req e il nome del file con req.file.filename

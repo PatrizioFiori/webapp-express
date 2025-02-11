@@ -47,9 +47,9 @@ const show = (req, res) => {
 };
 
 
-const store = (req, res) => {
+const storeRecensioni = (req, res) => {
     const id = req.params.id
-    const { text, name, vote } = req.body //richiamo i dati dal body
+    const { text, name, vote } = req.body
 
     const recensioneSql = "INSERT INTO reviews (text, name, vote, movie_id) VALUES (?,?,?,?)"
 
@@ -60,6 +60,21 @@ const store = (req, res) => {
         res.json({ message: "recensione inserita", id: results.insertId })
 
     })
+}
+
+const store = (req, res) => {
+    console.log(req);
+    const { title, director, abstract, genre } = req.body
+    const imageName = req.file.filename
+
+    const sql = "INSERT INTO movies (title, director, genre, abstract, image) VALUES (?,?,?,?,?)"
+
+    connect.query(sql, [title, director, abstract, genre, imageName], (err, results) => {
+        if (err) return res.status(500).json({ error: "DB query failed" });
+        res.status(201)
+        res.json({ stato: "success", message: "film aggiunto" })
+    }
+    )
 }
 
 const update = (req, res) => {
@@ -80,6 +95,7 @@ const destroy = (req, res) => {
 module.exports = {
     index,
     show,
+    storeRecensioni,
     store,
     update,
     modify,
