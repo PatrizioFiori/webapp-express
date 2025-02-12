@@ -1,4 +1,7 @@
+
 const connect = require("../data/db")
+const path = require("path")
+const fs = require("fs")
 
 const index = (req, res) => {
     const sql = "SELECT * FROM movies";
@@ -88,9 +91,35 @@ const modify = (req, res) => {
 }
 
 const destroy = (req, res) => {
-    const id = req.params.id
-    res.send(`rotta destroy ${id}`)
-}
+    const id = req.params.id;
+
+    const sqlSelectImg = "SELECT image FROM movies WHERE id = ?";
+    const sqlDelete = "DELETE FROM movies WHERE id = ?";
+
+    connect.query(sqlSelectImg, [id], (err, results) => {
+        if (err) return res.status(500).json({ error: "DB query failed" });
+
+        const imageName = results[0].image;
+        const imagePath = path.join(__dirname, "../public/img/movies", imageName);
+
+
+        fs.unlink(imagePath, (err) => {
+            if (err) {
+                console.error("Errore nell'eliminazione del file:", err);
+                return res.status(500).json({ error: "Errore nell'eliminazione dell'immagine" });
+            }
+
+            connect.query(sqlDelete, [id], (err, results) => {
+                if (err) return res.status(500).json({ error: "DB query failed" });
+
+                res.json({ message: "Film e immagine eliminati con successo" });
+            });
+        });
+
+    });
+};
+
+module.exports = destroy;
 
 module.exports = {
     index,

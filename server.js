@@ -11,7 +11,7 @@ const imagePath = require("./middlewares/imgPathHandler")
 const moviesRouter = require("./routers/movies")
 
 app.use(cors({
-    origin: "http://localhost:5173"
+    origin: [`http://localhost:${5174}`]
 }))
 
 //asset statici
